@@ -547,7 +547,8 @@ def execute_select_query(query: str, db: Session):
         results = result_proxy.mappings().all()  # Convert to list of dictionaries
         # Serialize the results using jsonable_encoder to handle special data types like datetime
         json_compatible_data = jsonable_encoder(results)
-        return JSONResponse(content={"data": json_compatible_data, "total_rows": len(results)})
+        return json_compatible_data
+        # return JSONResponse(content={"data": json_compatible_data, "total_rows": len(results)})
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
