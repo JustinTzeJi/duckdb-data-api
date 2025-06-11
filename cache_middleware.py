@@ -27,7 +27,7 @@ dynamic content that could vary significantly with each request.
 from fastapi import Request
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.responses import Response
-from upstash_redis.asyncio import Redis
+# from upstash_redis.asyncio import Redis
 import hashlib
 
 # Load environment variables
@@ -35,7 +35,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Initialize Upstash Redis using environment variables
-redis = Redis.from_env()
+# redis = Redis.from_env()
 
 class CacheMiddleware(BaseHTTPMiddleware):
     """
@@ -83,7 +83,7 @@ class CacheMiddleware(BaseHTTPMiddleware):
             body = b''.join([chunk async for chunk in response.body_iterator])
             cache_content = body.decode()
             headers = {"Content-Length": str(len(cache_content))}
-            await redis.set(cache_key, cache_content)
+            # await redis.set(cache_key, cache_content)
             print(f"Cached response for key: {cache_key}")
             return Response(content=cache_content, status_code=200, media_type='application/json', headers=headers)
 
